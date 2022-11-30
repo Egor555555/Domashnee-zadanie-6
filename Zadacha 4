@@ -1,0 +1,37 @@
+//Считать из текстового файла массив целых чисел размерностью N<=10. В первой строке исходного файла указано число N, во второй - сам массив. 
+//Вставить после каждого отрицательного элемента число 0 и вывести в новый текстовый файл результирующий массив.
+#include "pt4.h"
+#include <fstream>
+using namespace std;
+
+void Solve()
+{
+    Task("TheMassiv37");
+	string str, str1;
+	pt >> str >> str1;
+	ifstream f1(str);
+	ofstream f2(str1);
+	int a;
+	if (f1 >> a) {
+		const int n = a * 2;
+		int* b = new int[n];
+		int i = 0;
+		while (f1 >> a) {
+			b[i++] = a;
+		}
+		for (int j = 0; j < i; j++) {
+			if (*(b + j) < 0) {
+				for (int k = n; k > j; k--) {
+					*(b + k + 1) = *(b + k);
+				}
+				*(b + j + 1) = 0;
+				i++;
+			}
+		}
+		for (int j = 0; j < i; j++) {
+			f2 << *(b + j) << " ";
+		}
+	}
+	f1.close();
+	f2.close();
+}
